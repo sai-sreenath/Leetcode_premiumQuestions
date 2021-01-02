@@ -1,0 +1,41 @@
+/**
+ * // This is Sea's API interface.
+ * // You should not implement it, or speculate about its implementation
+ * class Sea {
+ *     public boolean hasShips(int[] topRight, int[] bottomLeft);
+ * }
+ */
+
+class Solution {
+    public int countShips(Sea sea, int[] topRight, int[] bottomLeft) {
+        
+        if(sea.hasShips(topRight, bottomLeft) && topRight[0]>=bottomLeft[0] && topRight[1]>=bottomRight[1])
+        {
+            //ship present now
+            if(topRight[0]==bottomLeft[0] && topRight[1]==bottomLeft[1])
+                return 1;
+            
+            int toprightx = topRight[0];
+            int topRighty = topRight[1];
+            int botRightx = bottomRight[0];
+            int botRighty = bottomRight[1];
+            
+            int midx = (topRight[0] + bottomLeft[0])/2;
+            int midy = (topRight[1] + bottomLeft[1])/2;
+            
+            //Dividing squares, 
+            //bottom left square + top right square + rightmost bottom + leftmost up sqaure
+            
+            int ans = 0;
+            
+            ans = countShips(sea, new int[]{mx, my}, new int[]{blx,bly}) +
+                countShips(sea, new int[]{toprightx, topRighty}, new int[]{mx+1, my+1})+
+                countShips(sea, new int[]{topRightx, midy}, new int[]{midx+1, bottomLefty})
+                countShips(sea, new int[]{mx, topRighty}, new int[]{blx, my+1});
+            
+            return ans;           
+        }
+        else
+            return 0;
+    }
+}
