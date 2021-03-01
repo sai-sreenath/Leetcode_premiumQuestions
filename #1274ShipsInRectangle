@@ -9,33 +9,38 @@
 class Solution {
     public int countShips(Sea sea, int[] topRight, int[] bottomLeft) {
         
-        if(sea.hasShips(topRight, bottomLeft) && topRight[0]>=bottomLeft[0] && topRight[1]>=bottomRight[1])
+        if(sea.hasShips(topRight,bottomLeft) && topRight[0] >= bottomLeft[0] && topRight[1] >= bottomLeft[1])
         {
-            //ship present now
-            if(topRight[0]==bottomLeft[0] && topRight[1]==bottomLeft[1])
-                return 1;
-            
-            int toprightx = topRight[0];
-            int topRighty = topRight[1];
-            int botRightx = bottomRight[0];
-            int botRighty = bottomRight[1];
-            
-            int midx = (topRight[0] + bottomLeft[0])/2;
-            int midy = (topRight[1] + bottomLeft[1])/2;
-            
-            //Dividing squares, 
-            //bottom left square + top right square + rightmost bottom + leftmost up sqaure
-            
+            // now there is ship!
+            if(topRight[0] == bottomLeft[0] && topRight[1] == bottomLeft[1]){
+                return 1; // now there is only one point so return 1, as there is a ship
+            }
+                
+            int trx = topRight[0]; // x of topright
+            int tr_y = topRight[1]; // y of top right
+            int blx = bottomLeft[0]; // x of bottom left
+            int bly = bottomLeft[1]; // y of bottom ledt
+            int mx = (topRight[0]+bottomLeft[0])/2;
+            int my = (topRight[1]+bottomLeft[1])/2;
+            // see try to divide squares if we use have used one of the coordinates of one square say for bottom left we have
+            // used mx,my now for top left the square will start from mx+1,my+1 else we will count the ships in there twice
+            // Just make a diagram and count the starting points of each square and make sure they don't overlap.
+            // 1) bottom left square 
+            // 2) Top right square
+            // 3) Rightmost bottom square
+            // 4) Leftmost up square
             int ans = 0;
+            ans = countShips(sea,new int[] {mx,my},new int[] {blx,bly})+
+                countShips(sea,new int[]{trx,tr_y},new int[]{mx+1,my+1})+
+                countShips(sea,new int[]{trx,my},new int[]{mx+1,bly})+
+                countShips(sea,new int[]{mx,tr_y},new int[]{blx,my+1});
+            return ans;
             
-            ans = countShips(sea, new int[]{mx, my}, new int[]{blx,bly}) +
-                countShips(sea, new int[]{toprightx, topRighty}, new int[]{mx+1, my+1})+
-                countShips(sea, new int[]{topRightx, midy}, new int[]{midx+1, bottomLefty})
-                countShips(sea, new int[]{mx, topRighty}, new int[]{blx, my+1});
-            
-            return ans;           
         }
         else
+        {
+            // if no ships then return 0
             return 0;
+        }
     }
 }
