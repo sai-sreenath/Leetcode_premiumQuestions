@@ -1,0 +1,40 @@
+class Solution {
+    public int[] topKFrequent(int[] nums, int k) 
+    {
+        HashMap<Integer,Integer>map=new HashMap();
+        
+        for(int n:nums)
+        {
+            map.put(n,map.getOrDefault(n,0)+1);    
+        }   
+        
+        PriorityQueue<Integer>heap=new PriorityQueue<Integer>((n1,n2)-> map.get(n1) - map.get(n2));
+        
+        List<Integer>top_k = new ArrayList();
+        
+        //Add elements to heap
+        for(int n:map.keySet())
+        {
+            heap.add(n);
+            if(heap.size()>k)
+                heap.poll();
+        }    
+        
+        while(!heap.isEmpty())
+        {
+            top_k.add(heap.poll());
+        }   
+        
+        Collections.reverse(top_k);
+        
+        //List to Array Conversion
+        int[] arr = new int[top_k.size()]; 
+        
+        for(int i=0;i<top_k.size();i++){
+            arr[i] = top_k.get(i);
+        }
+              
+        
+        return arr;
+    }
+}
