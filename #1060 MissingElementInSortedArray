@@ -1,0 +1,30 @@
+class Solution {
+    public int missingElement(int[] nums, int k) {
+        
+        int kmissing =k;
+        int index = Integer.MIN_VALUE;
+        int numMissingElements = 0;
+        
+        for(int i=0;i<nums.length-1;i++)
+        {
+            numMissingElements = nums[i+1] - nums[i] -1;
+            
+            if(numMissingElements == 0)
+                continue;
+            
+            if(kmissing <= numMissingElements)
+            {
+                index = i;
+                break;
+            }
+            else
+            {
+                kmissing=kmissing-numMissingElements;
+            }
+        }
+        
+        index = (index==Integer.MIN_VALUE) ? nums.length-1 : index;
+        
+        return nums[index] + kmissing;
+    }
+}
