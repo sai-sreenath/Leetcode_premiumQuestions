@@ -6,3 +6,9 @@ https://leetcode.com/problems/find-all-anagrams-in-a-string/discuss/92007/slidin
 
 Subsets/Combinations/Permutations(Backtracking questions)
 https://leetcode.com/problems/subsets/discuss/27281/A-general-approach-to-backtracking-questions-in-Java-(Subsets-Permutations-Combination-Sum-Palindrome-Partitioning)
+
+
+char[] outputstr = new char[len]
+If output array contains ['a', 'b', 'c'] Then 
+Arrays.toString(output) will return ["a", "b", "c"]
+and String.valueOf(output) returns "abc"
